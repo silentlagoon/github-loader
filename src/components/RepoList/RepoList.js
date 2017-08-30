@@ -8,7 +8,6 @@ import {
     TableRowColumn,
   } from 'material-ui/Table';
   import { CircularProgress } from 'material-ui';
-  import { Link } from 'react-router';
 
 class RepoList extends Component {
     constructor() {
