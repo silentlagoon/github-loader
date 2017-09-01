@@ -10,21 +10,12 @@ import {
   import { CircularProgress } from 'material-ui';
 
 class RepoList extends Component {
-    constructor() {
-        super();
-        this.state = {};
+    constructor(props) {
+        super(props);
     }
 
     componentDidMount() {
-        fetch(`https://api.github.com/users/${this.props.params.username}/repos`)
-        .then(response => response.json())
-        .then(
-            repos => {
-                this.setState({
-                    repos: repos
-                });
-            }
-        );
+        this.props.getUserRepos(this.props.params.username);
     }
 
     _createTableRow(repos) {
@@ -40,11 +31,11 @@ class RepoList extends Component {
 
 
     render() {
-        if ( ! this.state.repos) {
+        const repos = this.props.repos;
+
+        if ( ! repos) {
             return (<CircularProgress />);
         }
-
-        const repos = this.state.repos;
 
         return (
             <div>

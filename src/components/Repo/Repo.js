@@ -2,25 +2,14 @@ import React, { Component } from 'react';
 import { Avatar } from 'material-ui';
 import { Link } from 'react-router';
 import { CircularProgress } from 'material-ui';
-import './Repo.css';
 
 class Repo extends Component {
-
-    constructor() {
-        super();
-        this.state = {};
+    constructor(props) {
+        super(props);
     }
 
     componentDidMount() {
-        fetch(`https://api.github.com/users/${this.props.params.username}`)
-        .then(response => response.json())
-        .then(
-            user => {
-                this.setState({
-                    user: user
-                });
-            }
-        );
+        this.props.getUser(this.props.params.username);
     }
 
     _userBlock = (user) => {
@@ -34,12 +23,13 @@ class Repo extends Component {
     }
 
     render() {
-        if ( ! this.state.user) {
-            return (<CircularProgress />);
+        const user = this.props.user;
+        
+        if(! user) {
+            return (
+                <CircularProgress />
+            );
         }
-
-        const user = this.state.user;
-
         return (
             <div>
                 <h2>User Page</h2>
